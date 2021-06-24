@@ -27,7 +27,7 @@ def has_humanitarian_content (activity):
         if sector.vocabulary == "10":
             # humanitarian clusters
             return True
-        elif sector.vocabulary in ["1", "2"] and sector.code.startswith("7"):
+        elif sector.vocabulary in ["1", "2"] and sector.code != None and sector.code.startswith("7"):
             # DAC humanitarian sectors
             return True
         else:
@@ -66,11 +66,13 @@ def add_org (org, role, data):
 #
 
 def lookup_sector (code):
+    if code == None: return None
     """ Look up a DAC purpose by 3-digit code """
     map = get_dataset("inputs/dac3-sector-map.json")
     return map.get(code[:3], None) # use the 3-digit code
 
 def lookup_cluster (code):
+    if code == None: return None
     """ Look up a humanitarian cluster by code """
     map = get_dataset("inputs/humanitarian-cluster-map.json")
     return map.get(code, None)
@@ -101,7 +103,7 @@ def make_activity(activity):
             "unclassified": [],
             "admin2": [],
             "admin1": [],
-            "countries": [country.code.upper() for country in activity.recipient_countries],
+            "countries": [country.code.upper() for country in filter(lambda country: country.code != None, activity.recipient_countries)],
         },
         "dates": {
             "start": activity.start_date_actual if activity.start_date_actual else activity.start_date_planned,
