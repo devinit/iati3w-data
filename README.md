@@ -1,7 +1,7 @@
 Data backend for the IATI+3W activity explorer
 ==============================================
 
-See https://github.com/davidmegginson/iati3w-web/ for the web frontend compontent.
+See https://github.com/markbrough/iati3w-web for the web frontend compontent.
 
 These are Python scripts that will periodically update the data resources for the activity explorer, eventually using GitHub Actions.
 
